@@ -59,7 +59,7 @@ Notice: TravelCompanion is intended for demo purposes only.
 
 3. The class TestTravelGenerator generates testdata for the TravelCompanionScala and the Solr Search-Index
    It's important that the DB and the Search-Index have the same Data - if the data is inconsistent:
-   - Delete DB: [UserHome]\pber\
+   - Delete DB: [UserHome]
    - Delete Solr Index: [ProjectHome]\solr\home\data
    - Jetty Run
    - Run TestTravelGenerator.scala: the tours and stages are added
