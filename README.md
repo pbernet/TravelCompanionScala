@@ -11,7 +11,7 @@ This project was created during the bachelor thesis by Ralf Muri and Daniel Hobi
 - Ajax & Comet (Blog as Single Page Application)
 - REST
 
-Please feel free to download & study our document in the "doc" directory (german!)
+Please feel free to download & study our document in the doc directory (german!)
 You will get some additional stuff like:
 - Best practices in Lift & HowTos
 - Working with IntelliJ IDEA & github.com
