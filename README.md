@@ -12,8 +12,8 @@ This project was created during the bachelor thesis by Ralf Muri and Daniel Hobi
 - REST
 
 Please feel free to download & study our document in the doc directory (german!)
-You will get some additional stuff like:
-### Best practices in Lift & HowTos
+###You will get some additional stuff like:
+1.  Best practices in Lift & HowTos
 2.  Working with IntelliJ IDEA & github.com
 3.  General information about TravelCompanion
 4.  Experience made by the authors
