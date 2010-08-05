@@ -1,14 +1,15 @@
 Welcome to TravelCompanion in Scala / Lift.
+========
 
 This project was created during the bachelor thesis by Ralf Muri and Daniel Hobi in spring 2010.
 
-The following technical aspects are implemented:
+## The following technical aspects are implemented:
 - JPA (based on lift-jpa-archetype)
 - User Management (copy & paste from ProtoUser without mapper functionality)
 - Validating (JSR 303)
 - GUI Widgets (DistanceTraveler)
 - Ajax & Comet (Blog as Single Page Application)
-- REST
+-- REST
 
 Please feel free to download & study our document in the "doc" directory (german!)
 You will get some additional stuff like:
