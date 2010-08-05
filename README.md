@@ -19,13 +19,13 @@ Please feel free to download & study our document in the doc directory (german!)
 4.  Experience made by the authors
 
 A running demo is deployed on stax.net:
-  [an example](http://travelcompanion.ralfmuri.staxapps.net "Title") inline link.
+  [http://travelcompanion.ralfmuri.staxapps.net](http://travelcompanion.ralfmuri.staxapps.net "Demo").
 
 
-To run the app:
-mvn install
-cd web
-mvn jetty:run
+###To run the app locally:
+1. mvn install
+2. cd web
+3. mvn jetty:run
 
 Then point your favorite browser to http://localhost:9090/
 
