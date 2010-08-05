@@ -56,10 +56,10 @@ Notice: TravelCompanion is intended for demo purposes only.
 
 2. The class TestTravelGenerator generates testdata for the TravelCompanionScala and the Solr Search-Index
    It's important that the DB and the Search-Index have the same Data - if the data is inconsistent:
-- Delete DB: [UserHome]\pber\
-- Delete Solr Index: [ProjectHome]\solr\home\data
-- Jetty Run
-- Run TestTravelGenerator.scala: the tours and stages are added
-- Jetty restart: needs to be done, because the Test-Class uses another "JPA Session"
+   Delete DB: [UserHome]\pber\
+   Delete Solr Index: [ProjectHome]\solr\home\data
+   Jetty Run
+   Run TestTravelGenerator.scala: the tours and stages are added
+   Jetty restart: needs to be done, because the Test-Class uses another "JPA Session"
 
 3. Does it deploy to stax ?
