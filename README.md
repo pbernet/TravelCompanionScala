@@ -19,7 +19,8 @@ Please feel free to download & study our document in the doc directory (german!)
 4.  Experience made by the authors
 
 A running demo is deployed on stax.net:
-http://travelcompanion.ralfmuri.staxapps.net
+  [an example](http://travelcompanion.ralfmuri.staxapps.net "Title") inline link.
+
 
 To run the app:
 mvn install
