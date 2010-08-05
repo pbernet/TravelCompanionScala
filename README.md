@@ -53,7 +53,7 @@ Notice: TravelCompanion is intended for demo purposes only.
 ### Issues
 1. Because there are now two "memory-hungry" webapps, set your jetty run config in your IDE to:
    -XX:MaxPermSize=256m
-   -Xms500m -Xmx500
+   -Xms500m -Xmx500m
 
 2. The class TestTravelGenerator generates testdata for the TravelCompanionScala and the Solr Search-Index
    It's important that the DB and the Search-Index have the same Data - if the data is inconsistent:
