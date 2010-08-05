@@ -9,7 +9,7 @@ This project was created during the bachelor thesis by Ralf Muri and Daniel Hobi
 - Validating (JSR 303)
 - GUI Widgets (DistanceTraveler)
 - Ajax & Comet (Blog as Single Page Application)
--- REST
+- REST
 
 Please feel free to download & study our document in the "doc" directory (german!)
 You will get some additional stuff like:
