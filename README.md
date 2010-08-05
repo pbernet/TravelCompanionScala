@@ -13,10 +13,10 @@ This project was created during the bachelor thesis by Ralf Muri and Daniel Hobi
 
 Please feel free to download & study our document in the doc directory (german!)
 You will get some additional stuff like:
-   - Best practices in Lift & HowTos
-   - Working with IntelliJ IDEA & github.com
-   - General information about TravelCompanion
-   - Experience made by the authors
+1.  Best practices in Lift & HowTos
+2.  Working with IntelliJ IDEA & github.com
+3.  General information about TravelCompanion
+4.  Experience made by the authors
 
 A running demo is deployed on stax.net:
 http://travelcompanion.ralfmuri.staxapps.net
