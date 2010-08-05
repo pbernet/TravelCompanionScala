@@ -55,7 +55,9 @@ Notice: TravelCompanion is intended for demo purposes only.
    -XX:MaxPermSize=256m
    -Xms500m -Xmx500m
 
-2. The class TestTravelGenerator generates testdata for the TravelCompanionScala and the Solr Search-Index
+2. Use JRE 1.6 or higher to run the webapps
+
+3. The class TestTravelGenerator generates testdata for the TravelCompanionScala and the Solr Search-Index
    It's important that the DB and the Search-Index have the same Data - if the data is inconsistent:
    - Delete DB: [UserHome]\pber\
    - Delete Solr Index: [ProjectHome]\solr\home\data
@@ -63,4 +65,4 @@ Notice: TravelCompanion is intended for demo purposes only.
    - Run TestTravelGenerator.scala: the tours and stages are added
    - Jetty restart: needs to be done, because the Test-Class uses another "JPA Session"
 
-3. Does it deploy to stax ?
+4. Does it deploy to stax ?
