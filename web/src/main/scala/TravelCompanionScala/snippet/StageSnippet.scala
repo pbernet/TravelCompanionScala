@@ -51,6 +51,8 @@ class StageSnippet {
       if (Validator.is_valid_entity_?(stage)) {
         Model.mergeAndFlush(stage)
         val currentTour = tourVar.is
+        //a doc can be added to the Solr-Index n times
+        SolrAPI.addToSolr(stage)
         S.redirectTo("/tour/view", () => tourVar(currentTour))
       }
     }
@@ -145,6 +147,7 @@ class StageSnippet {
     val s = Model.merge(stage)
     Model.remove(s)
     val currentTour = tourVar.is
+    SolrAPI.deleteDoc(stage.id)
     S.redirectTo("/tour/view", () => tourVar(currentTour))
   }
 

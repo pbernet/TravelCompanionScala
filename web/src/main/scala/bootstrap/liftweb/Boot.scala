@@ -3,6 +3,7 @@ package bootstrap.liftweb
 import _root_.net.liftweb.sitemap._
 import _root_.net.liftweb.sitemap.Loc._
 import net.liftweb.http._
+import js.jquery.JQuery14Artifacts
 import net.liftweb.widgets.tablesorter.TableSorter
 import net.liftweb.widgets.autocomplete.AutoComplete
 import provider.{HTTPCookie, HTTPRequest}
@@ -52,6 +53,9 @@ class Boot {
       case _ => "text/html; charset=utf-8"
     }
 
+    //seems to work, but not activated yet
+    //LiftRules.jsArtifacts=JQuery14Artifacts
+
     // where to search for snippets, views, etc
     LiftRules.addToPackages("TravelCompanionScala")
     LiftRules.resourceNames = "TravelCompanion" :: "Member" :: "Tour" :: "Blog" :: "Picture" :: Nil
@@ -96,6 +100,7 @@ class Boot {
     // new DSL Syntax for creating Menu Entries, since Lift2.0-M5
     val tourMenuEntries: List[Menu] = List(
       Menu("tour", S ? "tour") / "tour" / "list" >> LocGroup("main") >> LocGroup("tour"),
+
       Menu("tour_view", "Reise anzeigen") / "tour" / "view" >> LocGroup("tour"),
       Menu("tour_edit", "Reise bearbeiten") / "tour" / "edit" >> LoggedIn >> TourModification >> LocGroup("tour"),
       Menu("tour_stage_add", "Abschnitt ansehen") / "tour" / "stage" / "view" >> LocGroup("tour"),
@@ -113,9 +118,14 @@ class Boot {
       Menu(Loc("picture_view", "picture" :: "view" :: Nil, "Bild anzeigen", LocGroup("picture"))),
       Menu(Loc("picture_create", "picture" :: "create" :: Nil, "Bild hinzuf&uuml;gen", LoggedIn, PictureModification, LocGroup("picture"))))
 
+    val searchMenuEntries: List[Menu] = List(
+      Menu("search", S ? "search") / "tour" / "search"  >> LocGroup("main")
+      )
+
+
     val entries = Menu(Loc("index", "index" :: Nil, S.?("home"), LocGroup("main"))) ::
             Menu(Loc("access_restricted", "accessrestricted" :: Nil, "Access Restricted")) ::
-            tourMenuEntries ::: blogMenuEntries ::: pictureMenuEntries ::: UserManagement.sitemap
+            tourMenuEntries ::: blogMenuEntries ::: pictureMenuEntries ::: searchMenuEntries ::: UserManagement.sitemap
 
     LiftRules.setSiteMap(SiteMap(entries: _*))
 

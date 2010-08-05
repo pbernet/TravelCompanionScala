@@ -2,7 +2,6 @@ package TravelCompanionScala.api
 
 import TravelCompanionScala.model.EntityConverter._
 import net.liftweb.common._
-import TravelCompanionScala.model.{Model, Tour}
 import net.liftweb.util.Helpers._
 import net.liftweb.http.{SessionVar, RequestVar, SHtml, S}
 import net.liftweb.http.rest.{XmlSelect, JsonSelect, RestHelper}
@@ -10,6 +9,7 @@ import net.liftweb.json.Xml
 import xml.{Elem, Text, Node}
 import collection.mutable.Buffer
 import TravelCompanionScala.snippet.tourVarSession
+import TravelCompanionScala.model.{UserManagement, Model, Tour}
 
 /**
  * GridAPI, serves the special jqGrid Table. This component was chosen because of the paging
@@ -48,7 +48,7 @@ object GridAPI extends RestHelper {
 
       //Not posssible to create typesafe query - because only in Java with Java Entity-Types
       //see http://www.ibm.com/developerworks/java/library/j-typesafejpa
-      var queryString = "SELECT t from Tour t order by"
+      var queryString = "SELECT t from Tour t where not t.owner = :owner order by"
 
       Ssidx match {
         case "ID" => queryString = queryString.concat(" t.id")
@@ -63,14 +63,15 @@ object GridAPI extends RestHelper {
         case _ => queryString = queryString.concat(" ASC")
       }
 
-
       val customQuery = Model.createQuery[Tour](queryString)
+
+      //exclude tours by others as in named query findTourByOthers
+      customQuery.setParameter("owner", UserManagement.currentUser)
+
       //Not all DBs support FETCH, FIRST, JPA might behave strange when changing the DB
       //see http://troels.arvin.dk/db/rdbms/#select-limit
       customQuery.setFirstResult(page * rows)
       customQuery.setMaxResults(rows)
-
-
       var tourData2 = customQuery.getResultList()
       tourData = tourData2.flatMap(tour => bind("tour", tour.toGrid, "name" -> PCData(SHtml.link("view", () => tourVarSession(tour), Text(tour.name)))))
     }

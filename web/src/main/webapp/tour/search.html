@@ -1,0 +1,88 @@
+<!--suppress ALL -->
+<lift:surround with="default" at="content">
+    <head>
+    </head>
+
+    <div class="content">
+        <p>
+            <lift:loc locid="searchtitle">Suchen nach Reisen und Abschnitten</lift:loc>
+        </p>
+        <lift:Msgs>
+            <lift:error_msg/>
+        </lift:Msgs>
+        <lift:SearchSnippet.inputCriteria form="POST">
+            <table class="form">
+                <tbody>
+                <tr>
+                    <td class="desc"><label for="xxx">
+                        <lift:loc locid="searchcountresults">Anzahl Treffer (Exp.)</lift:loc>
+                    </label></td>
+                    <td>
+                        <search:countResults/>
+                        <span id="checkSearchResults"></span>
+                        <span id="link2AdminQuery"></span>
+                    </td>
+                    <td>
+                       <search:link2Admin/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="tour"><label for="xxx">
+                        <lift:loc locid="searchautosuggest">AutoSuggest</lift:loc>
+                    </label></td>
+                    <td>
+                        <search:autoSuggest/>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+            <div class="bottomnavi">
+                <search:search/>
+            </div>
+        </lift:SearchSnippet.inputCriteria>
+
+        <lift:SearchSnippet.showIfQueryDone>
+            <div class="content">
+                <h1>
+                    <lift:loc locid="searchresults">Search Results</lift:loc>
+                </h1>
+                <p>
+                </p>
+                <lift:TableSorter for="listtours"/>
+                <table class="tablesorter list" id="listtours">
+                    <thead>
+                    <tr>
+                        <th>
+                            <lift:loc locid="searchname">Name</lift:loc>
+                        </th>
+                        <th>
+                            <lift:loc locid="searchdesc">Beschreibung</lift:loc>
+                        </th>
+                        <th>
+                            <lift:loc locid="searchops">Operationen</lift:loc>
+                        </th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <lift:SearchSnippet.searchResults>
+                        <tr>
+                            <td>
+                                <stageDoc:name/>
+                            </td>
+                            <td>
+                                <stageDoc:description/>
+                            </td>
+                            <td>
+                                <stageDoc:edit/>
+                            </td>
+                        </tr>
+                    </lift:SearchSnippet.searchResults>
+                    </tbody>
+                </table>
+
+            </div>
+        </lift:SearchSnippet.showIfQueryDone>
+    </div>
+</lift:surround>
