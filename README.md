@@ -27,12 +27,12 @@ A running demo is deployed on stax.net:
 2. cd web
 3. mvn jetty:run
 
-Then point your favorite browser to http://localhost:9090/
+Then point your favorite browser to [http://localhost:9090/](http://localhost:9090/ "Local").
 
-To create an offline version of the app (web/target/TravelCompanionScala-offline-1.0/):
-mvn install
-cd web
-mvn package -Pjetty-offline
+###To create an offline version of the app (web/target/TravelCompanionScala-offline-1.0/):
+1. mvn install
+2. cd web
+3. mvn package -Pjetty-offline
 
 Notice: TravelCompanion is intended for demo purposes only.
 
