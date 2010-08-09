@@ -378,6 +378,8 @@ class TestTravelGenerator {
 
     if (query.getResultList().size > 0) {
       query.getResultList().foreach(locations += _)
+      //make sure that the persistent locations are known to the current persistence context
+      locations.foreach(elem => em.merge(elem))
       locations.toList
     } else {
 
