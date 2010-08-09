@@ -65,6 +65,4 @@ Notice: TravelCompanion is intended for demo purposes only.
    - Run TestTravelGenerator.scala: the tours and stages are added
    - Jetty restart: needs to be done, because the Test-Class uses another "JPA Session"
 
-Sometimes the generated data are not commited on mac installation. This needs further research.
-
 4. Does it deploy to stax ?
