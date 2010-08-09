@@ -53,14 +53,18 @@ Notice: TravelCompanion is intended for demo purposes only.
 ### Issues
 1. Because there are now two "memory-hungry" webapps, set your jetty run config in your IDE to:
    -XX:MaxPermSize=256m
-   -Xms500m -Xmx500
+   -Xms500m -Xmx500m
 
-2. The class TestTravelGenerator generates testdata for the TravelCompanionScala and the Solr Search-Index
+2. Use JRE 1.6 or higher to run the webapps
+
+3. The class TestTravelGenerator.scala generates testdata for the DB and the Solr Search-Index
    It's important that the DB and the Search-Index have the same Data - if the data is inconsistent:
-   - Delete DB: [UserHome]\pber\
+   - Delete DB: [UserHome]
    - Delete Solr Index: [ProjectHome]\solr\home\data
    - Jetty Run
    - Run TestTravelGenerator.scala: the tours and stages are added
    - Jetty restart: needs to be done, because the Test-Class uses another "JPA Session"
 
-3. Does it deploy to stax ?
+Sometimes the generated data are not commited on mac installation. This needs further research.
+
+4. Does it deploy to stax ?
