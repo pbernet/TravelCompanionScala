@@ -1,20 +1,12 @@
 package TravelCompanionScala.model
 
 import xml.{Text, NodeSeq}
-import dispatch.{Http, :/}
-import net.liftweb.actor.LiftActor
 import collection.mutable.Queue
 import net.liftweb.util.Helpers._
 import java.net.ConnectException
-import net.liftweb.common.{Loggable, Logger}
+import net.liftweb.common.Loggable
+import dispatch.{Threads, Http, :/}
 
-//TODO This API is a Singleton - try to apply LiftActors inside for async Access to Solr
-object SolrBackgroundThread extends LiftActor {
-  def messageHandler = {
-    case DoFunc(func) => func()
-  }
-}
-case class DoFunc(f: () => Unit)
 
 //A temp container for AutoSuggest results
 case class SolrSuggestResult(name: String, number: Int)
@@ -34,7 +26,7 @@ object SolrAPI extends Loggable {
       //the wildcard after q ist used so that the number of docs can be calculated
       //additional param rows=0, so the response size is short
       //TODO Test this with special search syntax: AND, OR, meta:, "fixed expression"
-      val response = SolrAPI.selectRequest(Map("q" -> (trimmedString + "*"), "start" -> "0", "rows" -> "0"))
+      val response = SolrAPI.selectRequestAsync(Map("q" -> (trimmedString + "*"), "start" -> "0", "rows" -> "0"))
 
       //parse the response for the size
       val numFound = (response \\ "result" \ "@numFound").text
@@ -53,7 +45,7 @@ object SolrAPI extends Loggable {
       logger.info("SolrAPI>>findTours Params: queryString =" + trimmedString + " start =" + start + " rows =" + rows + " at %s".format(now))
 
       var results = new Queue[SolrDocStage]()
-      val responseOut = SolrAPI.selectRequest(Map("q" -> (trimmedString), "start" -> start.toString, "rows" -> rows.toString))
+      val responseOut = SolrAPI.selectRequestAsync(Map("q" -> (trimmedString), "start" -> start.toString, "rows" -> rows.toString))
 
       //Not yet used here - see method findToursCount
       //val numFound = (responseOut \\ "result" \ "@numFound").text
@@ -90,7 +82,7 @@ object SolrAPI extends Loggable {
       //If the facet.field param is passed n times: Only terms which ALL the fields are returned (eg "facet.field" -> "s_description", "facet.field" -> "s_name")
       //see http://wiki.apache.org/solr/SimpleFacetParameters#facet.field
       //TODO Another way of facetting: use param facet.query n times (See Solr book 152)
-      val responseOut = SolrAPI.selectRequest(Map("q" -> splittedQuery._1, "facet.prefix" -> splittedQuery._2, "indent" -> "on", "facet" -> "on", "rows" -> "0", "facet.field" -> "text", "facet.limit" -> limit.toString, "facet.mincout" -> "1"))
+      val responseOut = SolrAPI.selectRequestAsync(Map("q" -> splittedQuery._1, "facet.prefix" -> splittedQuery._2, "indent" -> "on", "facet" -> "on", "rows" -> "0", "facet.field" -> "text", "facet.limit" -> limit.toString, "facet.mincout" -> "1"))
 
       var resultsColl = new Queue[SolrSuggestResult]()
       val colLst = responseOut \\ "lst"
@@ -191,7 +183,6 @@ object SolrAPI extends Loggable {
 
     try {
       http(rquery <> {response = _})
-      //returns the parsed xml response as NodeSeq
       response
     } catch {
       case cone: ConnectException => logger.error("SolrAPI>>selectRequest: " + "Connect Problem to localhost:9090 - Contact System Admin!" + " at %s".format(now)); Text("technical error")
@@ -199,21 +190,27 @@ object SolrAPI extends Loggable {
     }
   }
 
-  //TODO Does not work anymore, response is not filled. Lift-Actor Problem in Snapshot ?
-  //http://groups.google.com/group/liftweb/browse_thread/thread/7efcd81aa30aab57/dbedf5db37d9a214?lnk=gst&q=solr#dbedf5db37d9a214
+  //works with built in async meccano of databinder dispatch lib
+  //Doc http://dispatch.databinder.net
+  //Sample http://implicit.ly/dispatch-070
   def selectRequestAsync(paramMap: Map[String, String]): NodeSeq = {
 
-    val http = new Http
+    val http = new Http with Threads
     var response: NodeSeq = Text("")
     val req = :/("localhost", 9090) / "solr" / "select"
 
     //Append query string
     val rquery = req <<? paramMap
 
-    //Only difference to method selectRequest
-    SolrBackgroundThread ! DoFunc(() => {http(rquery <> {response = _})})
-    //returns the parsed xml response as NodeSeq
-    response
+    try {
+      //call async and evaluate result immediately
+      val futureFuct = http.future(rquery <> {response = _})
+      futureFuct()
+      response
+    } catch {
+      case cone: ConnectException => logger.error("SolrAPI>>selectRequestAsync: " + "Connect Problem to localhost:9090 - Contact System Admin!" + " at %s".format(now)); Text("technical error")
+      case e => logger.info("SolrAPI>>selectRequestAsync: " + "Solr has a Syntax Problem with your entry - Try again!" + " at %s".format(now)); e.printStackTrace(); Text("user error")
+    }
   }
 
   private def splitQuery(trimmedString: String) = {
