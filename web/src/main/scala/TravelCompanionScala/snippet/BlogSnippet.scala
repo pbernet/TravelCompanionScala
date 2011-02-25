@@ -232,7 +232,7 @@ class BlogSnippet {
       entries.flatMap(entry => bind("entry", html,
         // The FuncAttrBindParam binds a attribute of a xhtml element
         // the entry div id is bound to the right entry id
-        FuncAttrBindParam("id", _ => Text(blogEntryDivId + entry.id), "id"),
+        FuncAttrBindParam("id",  {html :NodeSeq => Text(blogEntryDivId + entry.id)}, "id"),
         "title" -> entry.title,
         "tour" -> belongsTo(entry),
         "content" -> entry.content,
@@ -245,10 +245,10 @@ class BlogSnippet {
         "creator" -> entry.owner.name,
         // The FuncAttrBindParam binds a attribute of a xhtml element
         // the comments div is bound to the right entry id
-        FuncAttrBindParam("commentsId", _ => Text(commentDivId + entry.id), "id"),
+        FuncAttrBindParam("commentsId", {html :NodeSeq => Text(commentDivId + entry.id)}, "id"),
         // The FuncAttrBindParam binds a attribute of a xhtml element
         // the comments form div is bound to the right entry id
-        FuncAttrBindParam("commentFormId", _ => Text(commentFormDivId + entry.id), "id")))
+        FuncAttrBindParam("commentFormId", {html :NodeSeq => Text(commentFormDivId + entry.id)}, "id")))
     }
 
     /**
