@@ -65,4 +65,4 @@ Notice: TravelCompanion is intended for demo purposes only.
    - Run TestTravelGenerator.scala: the tours and stages are added
    - Jetty restart: needs to be done, because the Test-Class uses another "JPA Session"
 
-4. Does it deploy to stax ?
+4. Note that this integration is not using the more common (and probably faster) solrj lib but uses the scala databinder lib instead.
